@@ -1,4 +1,4 @@
-# Snake clone by Michał Gibasa (aka MadRussianHacker)
+# Snake clone by Michał Gibas
 
 ## Build dependencies
 
