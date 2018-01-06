@@ -8,7 +8,6 @@
 
 #include "SDL.h"
 
-
 class Game
 {
 public:
@@ -24,7 +23,7 @@ private:
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool running;
-    int windowWidth, windowHeight;
+    int m_windowWidth, m_windowHeight;
 };
 
 #endif //SNAKE_GAME_HPP

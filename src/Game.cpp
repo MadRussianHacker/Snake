@@ -6,8 +6,8 @@
 #include "Game.hpp"
 
 Game::Game(int windowWidth, int windowHeight){
-    this->windowWidth = windowWidth;
-    this->windowHeight = windowHeight;
+    m_windowWidth = windowWidth;
+    m_windowHeight = windowHeight;
 }
 
 Game::~Game(){
@@ -44,8 +44,9 @@ void Game::update(){
 }
 
 void Game::render() const {
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
-    
+
     SDL_RenderPresent(renderer);
 }
 
@@ -56,7 +57,7 @@ int Game::initialize(){
     }
 
     window = SDL_CreateWindow("Snake", SDL_WINDOWPOS_CENTERED,
-             SDL_WINDOWPOS_CENTERED, windowWidth, windowHeight, SDL_WINDOW_SHOWN);
+             SDL_WINDOWPOS_CENTERED, m_windowWidth, m_windowHeight, SDL_WINDOW_SHOWN);
     if(window == nullptr){
         logError("Can't create window: " + std::string(SDL_GetError()));
         SDL_Quit();
@@ -71,6 +72,7 @@ int Game::initialize(){
         SDL_Quit();
         return 1;
     }
+
     running = true;
     return 0;
 }
