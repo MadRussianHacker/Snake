@@ -14,7 +14,7 @@
 4. Create folder named "build":
 
 ```bash
-    $ touch build
+    $ mkdir build
 ```
 
 5. Open it (cd).
