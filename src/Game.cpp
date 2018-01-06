@@ -2,12 +2,14 @@
     simple snake clone
     Copyright 2017 by Michał Gibas
 */
+#include <chrono>
 #include "Error.hpp"
 #include "Game.hpp"
 
 Game::Game(int windowWidth, int windowHeight){
     m_windowWidth = windowWidth;
     m_windowHeight = windowHeight;
+    deltaTime = 0.0f;
 }
 
 Game::~Game(){
@@ -19,9 +21,13 @@ int Game::run(){
         return 1;
     while(running)
     {
+        auto start = std::chrono::high_resolution_clock::now();
         handleEvents();
         update();
         render();
+        auto end = std::chrono::high_resolution_clock::now();
+        std::chrono::duration<float> duration = end-start;
+        deltaTime = duration.count();
     }
     return 0;
 }
@@ -37,16 +43,34 @@ void Game::handleEvents(){
     while(SDL_PollEvent(&event)){
         if(event.type == SDL_QUIT)
             running = false;
+        if(event.type == SDL_KEYDOWN){
+            switch(event.key.keysym.sym)
+            {
+                case SDLK_UP:
+                    player.setDirection(UP);
+                break;
+                case SDLK_DOWN:
+                    player.setDirection(DOWN);
+                break;
+                case SDLK_LEFT:
+                    player.setDirection(LEFT);
+                break;
+                case SDLK_RIGHT:
+                    player.setDirection(RIGHT);
+                break;    
+            }
+        }
     }
 }
 
 void Game::update(){
+    player.update(deltaTime);
 }
 
 void Game::render() const {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
-
+    player.draw(renderer);
     SDL_RenderPresent(renderer);
 }
 

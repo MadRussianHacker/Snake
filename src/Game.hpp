@@ -8,6 +8,8 @@
 
 #include "SDL.h"
 
+#include "Player.hpp"
+
 class Game
 {
 public:
@@ -20,10 +22,13 @@ private:
     void update();
     void render() const;
     void cleanup();
+
+    float deltaTime;
     SDL_Window* window;
     SDL_Renderer* renderer;
     bool running;
     int m_windowWidth, m_windowHeight;
+    Player player;
 };
 
 #endif //SNAKE_GAME_HPP
