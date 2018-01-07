@@ -27,12 +27,15 @@ public:
     void setDirection(Direction direction);
     void grow();
     void draw(SDL_Renderer* renderer) const;
+    bool isDead();
+    unsigned int getPoints() const;
+    glm::vec2 getHeadPosition() const;
 private:
     void updateTail(std::list<Segment>::iterator it, glm::vec2 pos=glm::vec2(0.0f, 0.0f));
     float m_speed;
     Direction m_direction;
     std::list<Segment> tail;
-
+    unsigned int m_points;
     const static glm::vec2 directionVector[4];
 };
 

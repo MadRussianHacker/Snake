@@ -5,8 +5,9 @@
 #include "Player.hpp"
 
 Player::Player()
-:m_speed(0.1f),
-m_direction(RIGHT){
+:m_speed(0.02f),
+m_direction(RIGHT),
+m_points(0){
     tail = {
         Segment(glm::vec2(300.0f, 300.0f)),
         Segment(glm::vec2(300.0f-Segment::SIZE*1, 300.0f)),
@@ -25,10 +26,32 @@ void Player::setSpeed(float speed){
     m_speed = speed;
 }
 
-void Player::grow(){
-    tail.push_back(Segment(glm::vec2(-12.0f, -12.0f)));
+glm::vec2 Player::getHeadPosition() const {
+    return (*tail.begin()).getPosition();
 }
 
+void Player::grow(){
+    for(int i = 0; i<3; ++i)
+        tail.push_back(Segment(glm::vec2(-12.0f, -12.0f)));
+    ++m_points;
+}
+
+bool Player::isDead(){
+    glm::vec2 headPosition = (*this).getHeadPosition();
+    if(headPosition.x >= 800) return true;
+    if(headPosition.y >= 600) return true;
+    if(headPosition.x < 0) return true;
+    if(headPosition.y < 0) return true;
+
+    for(auto it = ++(tail.begin()); it != tail.end(); ++it){
+        if((headPosition.x == (*it).getPosition().x)
+         &&(headPosition.y == (*it).getPosition().y)){
+             return true;
+        }
+    }
+
+    return false;
+}
 void Player::setDirection(Direction direction){
     if((int)m_direction+(int)direction==5) return;
     if((int)m_direction+(int)direction==1) return;
@@ -48,7 +71,9 @@ void Player::update(float deltaTime){
         counter = 0;
     }
 }
-
+unsigned int Player::getPoints() const{
+    return m_points;
+}
 void Player::updateTail(std::list<Segment>::iterator it, glm::vec2 pos){
     if(it == tail.begin()){
         pos = (*it).getPosition();
