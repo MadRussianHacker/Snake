@@ -7,7 +7,7 @@
 #define SNAKE_SEGMENT_HPP
 
 #include "SDL.h"
-#include <glm/glm.hpp>
+#include <glm/vec2.hpp>
 
 class Segment
 {
