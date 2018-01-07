@@ -9,6 +9,7 @@
 #include "SDL.h"
 
 #include "Player.hpp"
+#include "Food.hpp"
 
 class Game
 {
@@ -29,6 +30,7 @@ private:
     bool running;
     int m_windowWidth, m_windowHeight;
     Player player;
+    Food food;
 };
 
 #endif //SNAKE_GAME_HPP

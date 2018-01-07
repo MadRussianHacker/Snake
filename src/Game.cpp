@@ -3,6 +3,8 @@
     Copyright 2017 by Michał Gibas
 */
 #include <chrono>
+#include <thread>
+#include <iostream>
 #include "Error.hpp"
 #include "Game.hpp"
 
@@ -65,11 +67,23 @@ void Game::handleEvents(){
 
 void Game::update(){
     player.update(deltaTime);
+    if((player.getHeadPosition().x == food.getPosition().x)
+     &&(player.getHeadPosition().y == food.getPosition().y)){
+        food.setRandomPosition();
+        player.grow();
+    }
+    if(player.isDead()){
+        std::cout<< "GAME OVER! \n";
+        std::cout<< "Your result: "<<player.getPoints()<<"\n";
+        std::this_thread::sleep_for(std::chrono::seconds(2));
+        running = false;
+    }
 }
 
 void Game::render() const {
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 255);
     SDL_RenderClear(renderer);
+    food.draw(renderer);
     player.draw(renderer);
     SDL_RenderPresent(renderer);
 }
